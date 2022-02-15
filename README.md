@@ -1,6 +1,6 @@
 # TCC_Coding_Test
 
-### A few questions![image](https://user-images.githubusercontent.com/7607884/154020906-a430136b-bdee-4397-b405-038ec6ed930b.png)
+### A few questions
 
 #### 1.	If you had more time, what would you change or focus more on?
 
