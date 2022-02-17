@@ -16,7 +16,7 @@ class User(AbstractBaseUser):
     clinicians = models.BooleanField(default=False) # a clinicians 
     patients = models.BooleanField(default=False) # a patients 
     admin = models.BooleanField(default=False) # a superuser
-
+    created_at = models.DateTimeField(auto_now_add=True)
     @property
     def is_patients(self):
         "Is the user a patients"
@@ -31,3 +31,22 @@ class User(AbstractBaseUser):
     def is_admin(self):
         "Is the user a admin member?"
         return self.admin
+
+# class TCCUser(AbstractUser):
+#     phr_relate = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, blank=True)
+#     token = models.EmailField(null=True, blank=True)
+#     USER_CHOICES = (
+#         ('1', 'Doctor'),
+#         ('2', 'Patient')
+#     )
+#     user_type = models.CharField(choices=USER_CHOICES, max_length=10)
+
+
+# class Patient(User):
+#     pass 
+
+class Clinician(User):
+    pass 
+
+
+
