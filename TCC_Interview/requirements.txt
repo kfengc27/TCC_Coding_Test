@@ -57,7 +57,6 @@ et-xmlfile==1.0.1
 facebook-scraper==0.2.43
 fake-useragent==0.1.11
 filelock==3.0.12
-get==2019.4.13
 graphviz==0.8.4
 greenlet==1.1.0
 gunicorn==20.1.0
