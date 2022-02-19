@@ -1,11 +1,10 @@
 {% extends 'base.html' %}
 {% block content %}
-
-<form id='form_login' method="post"> 
+<center>
+<form id='form_login' method="post" style="margin:0 auto"> 
 {% csrf_token %}
 {{ form.as_p }}
-    <input type="submit" class="btn btn-secondry">
-
+    <input type="submit" class="btn btn-primary">
 </form>
-
+</center>
 {% endblock %}
