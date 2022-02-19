@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block content %}
+    <center>
+    <div class="container" style="padding-top: 50px;">
+        <div class="row">
+          <div class="col">
+            <div class="card" style="width: 18rem;">
+                <img src="https://images.unsplash.com/photo-1474377207190-a7d8b3334068?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2340&q=80" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">Admin</h5>
+                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                  <a href="{% url 'admin' % }" class="btn btn-primary">Login as Admin</a>
+                </div>
+              </div>
+          </div>
+          <div class="col">
+            <div class="card" style="width: 18rem;">
+                <img src="https://media.istockphoto.com/photos/multiethnic-team-of-doctors-picture-id1293373244?k=20&m=1293373244&s=612x612&w=0&h=0eDi-2F4hRBHGnjlWZKoo2Xr_mZFGjkm0bQjZ7ZjWbA="  class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">Clinician</h5>
+                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                  <a href="#" class="btn btn-primary">Login as Clinician</a>
+                </div>
+              </div>
+          </div>
+          <div class="col">
+            <div class="card" style="width: 18rem;">
+                <img src="https://media.istockphoto.com/photos/attentive-young-lady-physician-interview-senior-patient-listen-to-picture-id1311337378?k=20&m=1311337378&s=612x612&w=0&h=GPZ2E5vBQQGtKsQ2pE8GwUT3lmUe-xEmE8_6ziY-51Y=" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">Patient</h5>
+                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                  <a href="#" class="btn btn-primary">Login as Patient</a>
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+    </center>
+{% endblock %}

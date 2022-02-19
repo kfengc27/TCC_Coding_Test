@@ -1,52 +1,65 @@
+from atexit import register
+from typing_extensions import Required
 from django.db import models
+from django.utils import timezone
+from django.contrib.auth.models import User
+import uuid
 from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser
 )
+# from pkg_resources import Requirement
 
-# Create your models here.
-class User(AbstractBaseUser):
-    email = models.EmailField(
-        verbose_name='email address',
-        max_length=255,
-        unique=True,
+class test(models.Model):
+    # id = models.CharField(default='')
+    sex = (
+        ('male','male'),
+        ('female','female')
+
     )
-    first_name = models.CharField(max_length=30)
-    last_name = models.CharField(max_length=30)
-    is_active = models.BooleanField(default=True)
-    clinicians = models.BooleanField(default=False) # a clinicians 
-    patients = models.BooleanField(default=False) # a patients 
-    admin = models.BooleanField(default=False) # a superuser
-    created_at = models.DateTimeField(auto_now_add=True)
-    @property
-    def is_patients(self):
-        "Is the user a patients"
-        return self.patients
+    name = models.CharField(max_length=128,unique=True, default='')
+    password = models.CharField(max_length=256, default='')
+    email = models.EmailField(unique=True, default='')
+    sex = models.CharField(max_length=32,choices=sex,default='female')
+    c_time = models.DateTimeField(auto_now_add=True)
 
-    @property
-    def is_clinicians(self):
-        "Is the user a member of staff"
-        return self.clinicians 
+    def __str__(self):
+        return self.name
 
-    @property
-    def is_admin(self):
-        "Is the user a admin member?"
-        return self.admin
 
-# class TCCUser(AbstractUser):
-#     phr_relate = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, blank=True)
-#     token = models.EmailField(null=True, blank=True)
-#     USER_CHOICES = (
-#         ('1', 'Doctor'),
-#         ('2', 'Patient')
+    
+# Create your models here.
+# class patient():
+#     uid = models.UUIDField(
+#         default=None,
+#         blank=True,
+#         null=True,
+#         unique=True,
 #     )
-#     user_type = models.CharField(choices=USER_CHOICES, max_length=10)
+#     USERNAME_FIELD = "uid"
+#     first_name = models.CharField(max_length=30, default='')
+#     last_name = models.CharField(max_length=30, default='')
+#     date_of_birth = models.DateField(default='')
+#     email = models.EmailField(
+#         verbose_name='email address',
+#         max_length=255,
+#         unique=True,
+#         default=''
+#     )
+#     password = models.CharField(max_length=30, default='12345678')
+#     date_joined = models.DateTimeField(default=timezone.now)
+#     new_field = models.CharField(max_length=140, null=True)
+#     # created_by = models.OneToOneField(User, default = "")
+#     created_by = models.ForeignKey(User,  on_delete=models.CASCADE, blank=True, null=True)
+
+class Measurement():
+    number = models.CharField(max_length=30)
 
 
-# class Patient(User):
-#     pass 
 
-class Clinician(User):
-    pass 
+
+
+
+
 
 
 
