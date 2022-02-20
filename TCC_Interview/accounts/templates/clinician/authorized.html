@@ -12,13 +12,12 @@
                     </li>
                     <li>
                     </li>
-
                     <li>
                         <a href="#submenu2" data-bs-toggle="collapse" class="nav-link px-0 align-middle ">
                             <i class="fs-4 bi-bootstrap"></i> <span class="ms-1 d-none d-sm-inline">My Patients</span></a>
                         <ul class="collapse nav flex-column ms-1" id="submenu2" data-bs-parent="#menu">
                             <li class="w-100">
-                                <a href="{% url 'getpatient'%}" class="nav-link px-0" style="color:blue"> <span class="d-none d-sm-inline">Show all of my patients</span></a>
+                                <a href="{%url 'getpatient'%}" class="nav-link px-0" style="color:blue"> <span class="d-none d-sm-inline">Show all of my patients</span></a>
                             </li>
                             <li>
                                 <a href="#" class="nav-link px-0" style="color:blue"> <span class="d-none d-sm-inline">Set alert for patients</span></a>
@@ -41,7 +40,7 @@
                         <img src="https://github.com/mdo.png" alt="hugenerd" width="30" height="30" class="rounded-circle">
                         <span class="d-none d-sm-inline mx-1">loser</span>
                     </a>
-                    <!-- <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
+                     <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
                         <li><a class="dropdown-item" href="#">New project...</a></li>
                         <li><a class="dropdown-item" href="#">Settings</a></li>
                         <li><a class="dropdown-item" href="#">Profile</a></li>
@@ -59,8 +58,7 @@
             <h4></h4>
             <ul class="list-unstyled">
                 <li><h5>My Patients</h5> Show a table of all patients with their latest measurements</li>
-                <a href="{% url 'getpatient' %}" class="nav-link px-0" style="color:blue"> <span class="d-none d-sm-inline">Show all of my patients</span></a>
-                
+                <a href="{%url 'getpatient'%}" class="nav-link px-0" style="color:blue"> <span class="d-none d-sm-inline">Show all of my patients</span></a>
                 {% for patient in patientObjs %}
     <tr> 
          <td>{{ patient.username }}</td>

@@ -38,7 +38,6 @@ class Clinician(commonInfo):
     }
     department = models.CharField(max_length=32,choices=departments,default='female')
 
-    #TODO add one to many relationship here so that clinician can manage different patients 
 
 class Patient(commonInfo):
     MyClinician = models.ForeignKey(
@@ -48,10 +47,6 @@ class Patient(commonInfo):
     def __str__(self):
         return "My clinician is %s " % self.MyClinician.first_name
 
-class Measurement():
-    type = models.CharField(max_length=128, default='')
-    number = models.IntegerField()
-    c_time = models.DateTimeField(auto_now_add=True)
 
 
 

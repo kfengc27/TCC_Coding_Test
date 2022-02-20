@@ -30,13 +30,10 @@ from django.contrib.auth.forms import UserCreationForm
 #                 message = "email not exist"
 #     return render(request, 'home/login.html')
 
-@login_required(login_url='/login')   
-def logoutView(request):
-    return render(request, 'home/logout.html')
 
-@login_required(login_url='/login')
-def authorized(request):
-    return render(request, 'home/authorized.html', {})
+# @login_required(login_url='/login')
+# def authorized(request):
+#     return render(request, 'home/authorized.html', {})
 
 def home(request):
     return render(request, 'home/welcome.html', {'today':datetime.today()})

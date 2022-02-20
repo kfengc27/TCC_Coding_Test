@@ -18,14 +18,13 @@
                             <i class="fs-4 bi-bootstrap"></i> <span class="ms-1 d-none d-sm-inline">My Patients</span></a>
                         <ul class="collapse nav flex-column ms-1" id="submenu2" data-bs-parent="#menu">
                             <li class="w-100">
-                                <a href="{% url 'getpatient' %}" class="nav-link px-0" style="color:blue"> <span class="d-none d-sm-inline">Show all of my patients</span></a>
+                                <a href="{%url 'getpatient'%}" class="nav-link px-0" style="color:blue"> <span class="d-none d-sm-inline">Show all of my patients</span></a>
                             </li>
                             <li>
                                 <a href="#" class="nav-link px-0" style="color:blue"> <span class="d-none d-sm-inline">Set alert for patients</span></a>
                             </li>
                         </ul>
                     </li>
-                   
                     <li>
                         <a href="{%url 'register'%}" class="nav-link px-0 align-middle">
                             <i class="fs-4 bi-people"></i> <span class="ms-1 d-none d-sm-inline">Register Patient</span> </a>
@@ -77,8 +76,8 @@
                     <td>{{ patient.last_name}}</td>
                     <td>{{ patient.email }}</td>
                     <td>{{ patient.date_of_birth}}</td>
-                    <td>{{ patient.Measurement.all[0]}}</td>
-                    <td>{{ patient.username }}</td>
+                    <td>{{ patient.heart_rate}}</td>
+                    <td>{{ patient.measurement_time}}</td>
                   </tr>
                   {% endfor %}
                 </tbody>

@@ -16,7 +16,7 @@ from .models import Clinician, Patient
 
 import functions.views as fViews 
 
-@login_required(login_url='/clinician/login')
+# @login_required(login_url='/clinician/login')
 def registerPatient(request):
     if request.session.get('is_login',None) != True:
         return render(request, 'clinician/login.html')
@@ -63,6 +63,7 @@ def login(request):
 
                 if user.password == password:
                     message = "Login Successfully"
+                    print(message)
                     request.session['is_login'] = True
                     request.session['username'] = user.username 
                     request.session['username'] = user.username 
@@ -80,19 +81,34 @@ def login(request):
                 print(message)
     return render(request, 'clinician/login.html')
 
-@login_required(login_url='/clinician/login')
+# @login_required(login_url='/clinician/login')
 def authorized(request):
     return render(request, 'clinician/authorized.html', {})
 
-@login_required(login_url='/clinician/login')
 def getMyPatients(request):
-    print("Start to get my patient")
     # TODO Get patient table 
     # context= {'title':'My Patients Table','list':1}
     myemail = request.session['email']
+    print("Start my patient pag")
     user = Clinician.objects.get(email = myemail)
     myPatients = Patient.objects.filter(MyClinician = user)
-    return render(request, 'clinician/showmypatient.html', {'firstname': request.session['first_name'], 'patientObjs':myPatients})
+    PatientObjs = []
+    for patient in myPatients:
+        first_name = patient.first_name 
+        last_name = patient.last_name 
+        email = patient.email
+        print(email)
+        data_of_birth = patient.date_of_birth 
+        try:
+            measurementObjSets = Measurement.objects.filter(TestBy=patient)
+            heart_rate = measurementObjSets[0].score 
+            measurement_time = measurementObjSets[0].c_time
+        except:
+            heart_rate = 'N/A' 
+            measurement_time = 'N/A'
+        patientObj = {'first_name':first_name, 'last_name':last_name,'email':email,'date_of_birth':data_of_birth,'heart_rate':heart_rate,'measurement_time':measurement_time}
+        PatientObjs.append(patientObj)
+    return render(request, 'clinician/showmypatient.html', {'firstname': request.session['first_name'], 'patientObjs':PatientObjs})
 
 
 def loginAsPatient(request):
