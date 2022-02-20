@@ -39,13 +39,13 @@ def detectAbnormal(type,rate,record_time,Patient, thresholdObjs, Measurement): #
         if float(rate) > thresholdObj.ThresholdScoreMax:
             subject = "Alert! Abnormal measurements detected"
             message = "%s %s %s's heart rate is too high. Please go to the website to review"%(record_time, Patient.first_name, Patient.last_name)
-            email_to = ['chengbin.feng@outlook.com','chengbin.feng@unsw.edu.au']
+            email_to = ['chengbin.feng@outlook.com','chengbin.feng@unsw.edu.au',Patient.MyClinician.email]
             sendEmail(subject,message,email_to)
             setAlerts(rate, record_time, Patient,Measurement)
         if float(rate) < thresholdObj.ThresholdScoreMin:
             subject = "Alert! Abnormal measurements detected"
             message = "%s %s %s's heart rate is too low. Please go to the website to review"%(record_time, Patient.first_name, Patient.last_name)
-            email_to = ['chengbin.feng@outlook.com','chengbin.feng@unsw.edu.au']
+            email_to = ['chengbin.feng@outlook.com','chengbin.feng@unsw.edu.au',Patient.MyClinician.email]
             sendEmail(subject,message,email_to)
             setAlerts(rate, record_time, Patient,Measurement)
     except: 
