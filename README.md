@@ -31,3 +31,11 @@
 
 #### 4. python3 manage.py runserver 
 
+### Create Admin Account
+
+#### python3 manage.py createsuperuser
+
+#### Admin login page: 127.0.0.1:8000/admin
+
+
+
