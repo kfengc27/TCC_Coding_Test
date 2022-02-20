@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<center>
+    <div class="container">
+        <div class="col-md-4 col-md-offset-4">
+            <h2 class="text-center">Thanks {{ firstname }}, you have add a new Heart Rate measurement.</h2>
+            <a href="{% url 'patientAddHeartRate'%}">Click here to start add heart rate measurement.</a>
+            <br>
+            <br>
+            <a href="{% url 'patientShowAllMyHistory'%}">Click here to see the history of my measurement.</a>
+            <br>
+            <br>
+            <a href="{% url 'patientLogout'%}">Click here to logout.</a>
+        </div>
+    </div> 
+</center>
+{% endblock %} 

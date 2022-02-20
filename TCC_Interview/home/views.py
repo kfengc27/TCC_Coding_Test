@@ -1,3 +1,4 @@
+from pyexpat import model
 from re import template
 from sre_constants import SUCCESS
 from django.http import HttpResponse
@@ -10,17 +11,24 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 
 
-
-# @login_required(login_url='/login')
-# def signupClinicianView(request):
-#     form = UserCreationForm()  
-#     context = {  
-#         'form':form  
-#     }  
-#     return render(request, 'clinician/register.html', context)
-
-class LoginInterfaceView(LoginView):
-    template_name = 'home/login.html'
+# def login(request):
+#     print(request.method)
+#     if(request.method == 'POST'):
+#         email = request.POST.get('email')
+#         password = request.POST.get('password')
+#         if email and password:
+#             try:
+#                 print("Search")
+#                 print(email)
+#                 print(password)
+#                 print(models.Clinician.objects.get(email=email))
+#                 # user = models.Clinician.objects.fileter(email = email)
+#                 print(user)
+#                 if user.password == password:
+#                     print('correct')
+#             except:
+#                 message = "email not exist"
+#     return render(request, 'home/login.html')
 
 @login_required(login_url='/login')   
 def logoutView(request):
@@ -32,6 +40,7 @@ def authorized(request):
 
 def home(request):
     return render(request, 'home/welcome.html', {'today':datetime.today()})
+
 
 
 

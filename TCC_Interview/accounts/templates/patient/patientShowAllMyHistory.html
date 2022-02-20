@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<center>
+    <div class="container">
+        <div class="col-md-12 col-md-offset-12">
+            <h2 class="text-center">Thanks {{ firstname }}, here is the history of your measurement.</h2>
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">First</th>
+                    <th scope="col">Last</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Date Of Birth</th>
+                    <th scope="col">Last Heart Rate </th>
+                    <th scope="col">Measurement Time</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    {% for measureObj in patientMeasurementObjs %}
+                  <tr>
+                    <th scope="row">{{ forloop.counter }}</th>
+                    <td>{{ first_name }}</td>
+                    <td>{{ last_name}}</td>
+                    <td>{{ email }}</td>
+                    <td>{{ date_of_birth}}</td>
+                    <td>{{ measureObj.score}}</td>
+                    <td>{{ measureObj.c_time }}</td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            <a href="{% url 'patientAddHeartRate'%}">Click here to start add heart rate measurement.</a>
+            <br>
+            <br>
+            <a href="{% url 'patientShowAllMyHistory'%}">Click here to see the history of my measurement.</a>
+            <br>
+            <br>
+            <a href="{% url 'patientLogout'%}">Click here to logout.</a>
+        </div>
+    </div> 
+</center>
+{% endblock %} 

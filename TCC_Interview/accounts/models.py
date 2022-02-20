@@ -1,5 +1,5 @@
 from atexit import register
-from typing_extensions import Required
+from shutil import unregister_unpack_format
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
@@ -9,53 +9,49 @@ from django.contrib.auth.models import (
 )
 # from pkg_resources import Requirement
 
-class test(models.Model):
-    # id = models.CharField(default='')
+class commonInfo(models.Model):
     sex = (
         ('male','male'),
         ('female','female')
-
     )
-    name = models.CharField(max_length=128,unique=True, default='')
-    password = models.CharField(max_length=256, default='')
-    email = models.EmailField(unique=True, default='')
+    username = models.CharField(max_length=128,unique=True, default='', primary_key=True)
+    first_name = models.CharField(max_length=128, default='', null=True)
+    last_name = models.CharField(max_length=128, default='', null=True)
+    #TODO Password should use hashlib to encrypt
+    password = models.CharField(max_length=256, default='', null=True)
+    email = models.EmailField(unique=True,null=True, default='')
+    date_of_birth = models.DateField(null=True, blank=True)
     sex = models.CharField(max_length=32,choices=sex,default='female')
     c_time = models.DateTimeField(auto_now_add=True)
-
+    class Meta:
+        abstract = True
     def __str__(self):
-        return self.name
+        return self.first_name + ' '+ self.last_name
 
+class Clinician(commonInfo):
+    departments = {
+        ('1', 'Radiology Department'),
+        ('2', 'Medical Record Department'),
+        ('3', 'Outpatient Department'),
+        ('4', 'Inpatient Service'),
+        ('5', 'Other Department')
+    }
+    department = models.CharField(max_length=32,choices=departments,default='female')
 
-    
-# Create your models here.
-# class patient():
-#     uid = models.UUIDField(
-#         default=None,
-#         blank=True,
-#         null=True,
-#         unique=True,
-#     )
-#     USERNAME_FIELD = "uid"
-#     first_name = models.CharField(max_length=30, default='')
-#     last_name = models.CharField(max_length=30, default='')
-#     date_of_birth = models.DateField(default='')
-#     email = models.EmailField(
-#         verbose_name='email address',
-#         max_length=255,
-#         unique=True,
-#         default=''
-#     )
-#     password = models.CharField(max_length=30, default='12345678')
-#     date_joined = models.DateTimeField(default=timezone.now)
-#     new_field = models.CharField(max_length=140, null=True)
-#     # created_by = models.OneToOneField(User, default = "")
-#     created_by = models.ForeignKey(User,  on_delete=models.CASCADE, blank=True, null=True)
+    #TODO add one to many relationship here so that clinician can manage different patients 
+
+class Patient(commonInfo):
+    MyClinician = models.ForeignKey(
+        Clinician,
+        on_delete=models.CASCADE,
+    )
+    def __str__(self):
+        return "My clinician is %s " % self.MyClinician.first_name
 
 class Measurement():
-    number = models.CharField(max_length=30)
-
-
-
+    type = models.CharField(max_length=128, default='')
+    number = models.IntegerField()
+    c_time = models.DateTimeField(auto_now_add=True)
 
 
 

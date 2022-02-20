@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container-fluid">
+    <div class="row flex-nowrap">
+        <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-grey">
+            <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
+                <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
+                    <li class="nav-item">
+                        <a href="#" class="nav-link align-middle px-0">
+                            <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline">Home</span>
+                        </a>
+                    </li>
+                    <li>
+                    </li>
+
+                    <li>
+                        <a href="#submenu2" data-bs-toggle="collapse" class="nav-link px-0 align-middle ">
+                            <i class="fs-4 bi-bootstrap"></i> <span class="ms-1 d-none d-sm-inline">My Patients</span></a>
+                        <ul class="collapse nav flex-column ms-1" id="submenu2" data-bs-parent="#menu">
+                            <li class="w-100">
+                                <a href="{% url 'getpatient' %}" class="nav-link px-0" style="color:blue"> <span class="d-none d-sm-inline">Show all of my patients</span></a>
+                            </li>
+                            <li>
+                                <a href="#" class="nav-link px-0" style="color:blue"> <span class="d-none d-sm-inline">Set alert for patients</span></a>
+                            </li>
+                        </ul>
+                    </li>
+                   
+                    <li>
+                        <a href="{%url 'register'%}" class="nav-link px-0 align-middle">
+                            <i class="fs-4 bi-people"></i> <span class="ms-1 d-none d-sm-inline">Register Patient</span> </a>
+                    </li>
+                    <li>
+                        <a href="{%url 'logout'%}" class="nav-link px-0 align-middle">
+                            <i class="fs-4 bi-table"></i> <span class="ms-1 d-none d-sm-inline">Logout</span></a>
+                    </li>
+                </ul>
+                <hr>
+                <!-- <div class="dropdown pb-4">
+                    <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="https://github.com/mdo.png" alt="hugenerd" width="30" height="30" class="rounded-circle">
+                        <span class="d-none d-sm-inline mx-1">loser</span>
+                    </a>
+                    <!-- <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
+                        <li><a class="dropdown-item" href="#">New project...</a></li>
+                        <li><a class="dropdown-item" href="#">Settings</a></li>
+                        <li><a class="dropdown-item" href="#">Profile</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="#">Sign out</a></li>
+                    </ul> -->
+                <!-- </div> --> 
+            </div>
+        </div>
+        <div class="col py-3">
+            <h2 class="text-center">Register Your Patient</h2>
+    <div class="container">
+        <div class="col-md-6 col-md-offset-6">
+          <form class='form-register' action="/clinician/register" method="post">
+
+              {% if message %}
+                  <div class="alert alert-warning">{{ message }}</div>
+              {% endif %}
+
+              {% csrf_token %}
+              <div class="form-group">
+                  {{ register_form.username.label_tag }}
+                  {{ register_form.username}}
+              </div>
+              <div class="form-group">
+                {{ register_form.first_name.label_tag }}
+                {{ register_form.first_name}}
+            </div>
+            <div class="form-group">
+                {{ register_form.last_name.label_tag }}
+                {{ register_form.last_name}}
+            </div>
+              <div class="form-group">
+                  {{ register_form.password1.label_tag }}
+                  {{ register_form.password1 }}
+              </div>
+              <div class="form-group">
+                  {{ register_form.password2.label_tag }}
+                  {{ register_form.password2 }}
+              </div>
+              <div class="form-group">
+                  {{ register_form.email.label_tag }}
+                  {{ register_form.email }}
+              </div>
+              <br>
+              <div class="form-group">
+                  {{ register_form.sex.label_tag }}
+                  {{ register_form.sex }}
+              </div>
+              <br>
+              <div class="form-group">
+                {{ register_form.date_of_birth.label_tag }}
+                {{ register_form.date_of_birth }}
+            </div>
+            <br>
+            <div class="form-group">
+                {{ register_form.captcha.errors }}
+                {{ register_form.captcha.label_tag }}
+                {{ register_form.captcha }}
+            </div>
+            <br>
+              <button type="reset" class="btn btn-default pull-left">Reset</button>
+              <button type="submit" class="btn btn-primary pull-right">Submit</button>
+          </form>
+        </div>
+    </div> 
+        </div>
+    </div>
+</div>
+{% endblock %}
