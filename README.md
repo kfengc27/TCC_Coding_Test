@@ -38,17 +38,17 @@
 
 - 4. python3 manage.py runserver 
 
-### Create Admin Account
+#### Create Admin Account
 
 - python3 manage.py createsuperuser
 
 - Admin login page: 127.0.0.1:8000/admin
 
-### Clinician Login Page 
+#### Clinician Login Page 
 
 - Clinician Login Page: http://127.0.0.1:8000/clinician/login
 
-### Patient Login Page
+#### Patient Login Page
 
 - Patient Login Page: http://127.0.0.1:8000/clinician/patient/login/
 
