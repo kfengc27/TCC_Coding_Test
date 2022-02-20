@@ -28,21 +28,28 @@
 
 ### Start process
 
-#### 0. git clone git@github.com:kfengc27/TCC_Coding_Test.git
+- 0. git clone git@github.com:kfengc27/TCC_Coding_Test.git
 
-#### 1. source env/bin/activate
+- 1. source env/bin/activate
 
-#### 2. sudo pip3 install -r requirements.txt
+- 2. sudo pip3 install -r requirements.txt
 
-#### 3. cd /TCC_Interview
+- 3. cd /TCC_Interview
 
-#### 4. python3 manage.py runserver 
+- 4. python3 manage.py runserver 
 
 ### Create Admin Account
 
-#### python3 manage.py createsuperuser
+- python3 manage.py createsuperuser
 
-#### Admin login page: 127.0.0.1:8000/admin
+- Admin login page: 127.0.0.1:8000/admin
 
+### Clinician Login Page 
+
+- Clinician Login Page: http://127.0.0.1:8000/clinician/login
+
+### Patient Login Page
+
+- Patient Login Page: http://127.0.0.1:8000/clinician/patient/login/
 
 
