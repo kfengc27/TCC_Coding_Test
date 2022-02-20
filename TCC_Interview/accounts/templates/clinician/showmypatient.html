@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container-fluid">
+    <div class="row flex-nowrap">
+        <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-grey">
+            <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
+                <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
+                    <li class="nav-item">
+                        <a href="#" class="nav-link align-middle px-0">
+                            <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline">Home</span>
+                        </a>
+                    </li>
+                    <li>
+                    </li>
+
+                    <li>
+                        <a href="#submenu2" data-bs-toggle="collapse" class="nav-link px-0 align-middle ">
+                            <i class="fs-4 bi-bootstrap"></i> <span class="ms-1 d-none d-sm-inline">My Patients</span></a>
+                        <ul class="collapse nav flex-column ms-1" id="submenu2" data-bs-parent="#menu">
+                            <li class="w-100">
+                                <a href="{%url 'getpatient'%}" class="nav-link px-0" style="color:blue"> <span class="d-none d-sm-inline">Show all of my patients</span></a>
+                            </li>
+                            <li>
+                                <a href="#" class="nav-link px-0" style="color:blue"> <span class="d-none d-sm-inline">Set alert for patients</span></a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="{%url 'register'%}" class="nav-link px-0 align-middle">
+                            <i class="fs-4 bi-people"></i> <span class="ms-1 d-none d-sm-inline">Register Patient</span> </a>
+                    </li>
+                    <li>
+                        <a href="{%url 'logout'%}" class="nav-link px-0 align-middle">
+                            <i class="fs-4 bi-table"></i> <span class="ms-1 d-none d-sm-inline">Logout</span></a>
+                    </li>
+                </ul>
+                <hr>
+                <!-- <div class="dropdown pb-4">
+                    <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="https://github.com/mdo.png" alt="hugenerd" width="30" height="30" class="rounded-circle">
+                        <span class="d-none d-sm-inline mx-1">loser</span>
+                    </a>
+                    <!-- <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
+                        <li><a class="dropdown-item" href="#">New project...</a></li>
+                        <li><a class="dropdown-item" href="#">Settings</a></li>
+                        <li><a class="dropdown-item" href="#">Profile</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="#">Sign out</a></li>
+                    </ul> -->
+                <!-- </div> --> 
+            </div>
+        </div>
+        <div class="col py-3">
+            <h3>Hi {{ firstname }}</h3>
+            <p class="lead">These are all of your patients.<br><i class="fa-solid fa-pencil"></i>Click the name of each patient to view the patient dashboard </p>
+          
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">First</th>
+                    <th scope="col">Last</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Date Of Birth</th>
+                    <th scope="col">Last Heart Rate </th>
+                    <th scope="col">Measurement Time</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    {% for patient in patientObjs %}
+                  <tr>
+                    <th scope="row">{{ forloop.counter }}</th>
+                    <td><a href="{%url 'getPatientDashboard' patient.username%}" target="_blank">{{ patient.first_name }}</a></td>
+                    <td>{{ patient.last_name}}</td>
+                    <td>{{ patient.email }}</td>
+                    <td>{{ patient.date_of_birth}}</td>
+                    <td>{{ patient.heart_rate}}</td>
+                    <td>{{ patient.measurement_time}}</td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

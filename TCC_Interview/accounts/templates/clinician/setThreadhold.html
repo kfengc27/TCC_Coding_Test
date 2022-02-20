@@ -1,0 +1,58 @@
+{% extends 'base.html' %} {% block content %}
+
+<center>
+  <div class="container">
+    <div class="col-md-4 col-md-offset-4">
+      <h2 class="text-center">
+        Hi {{ firstname }}, 
+      </h2>
+      <p> Please set the Threadhold for Patient <strong>{{ patient.first_name }} {{ patient.last_name }}</strong></p>
+      <br />
+      <form class='form-login' action="/clinician/setthreadhold/" method="post">
+        {% csrf_token %}
+        <label for="measurementType">Choose a measurement type:</label>
+        <select id="measurementType" name="measurementType">
+          <option value="Heart Rate" selected>Heart Rate</option>
+          <option value="Weight">Weight</option>
+          <option value="Blood Pressure">Blood Pressure</option>
+        </select>
+      <div class="form-group">
+        <label for="id_heartrate">The Maximum Threadhold is：</label>
+        <input
+          type="number"
+          name="maxthreadhold"
+          class="form-control"
+          id="maxthreadhold"
+          step="0.01"
+          value="140.00"
+          placeholder="heartrate"
+          autofocus
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="id_heartrate">The Minimum Threadhold is：</label>
+        <input
+          type="number"
+          name="minthreadhold"
+          class="form-control"
+          id="minthreadhold"
+          step="0.01"
+          value="70.00"
+          placeholder="heartrate"
+          autofocus
+          required
+        />
+      </div>
+
+      <br>
+      
+      <br>
+      <input class='btn btn-secondary' type="submit" name="Submit To Set">
+      <br>
+    </form>
+      <a href="{%url 'getPatientDashboard' patient.username%}">Back to previous page: Patient Dashboard.</a>
+    </div>
+  </div>
+</center>
+{% endblock %}

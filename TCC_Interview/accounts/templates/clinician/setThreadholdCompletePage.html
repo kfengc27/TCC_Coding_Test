@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<center>
+    <div class="container" style="padding-top: 60px;">
+        <div class="col-md-12 col-md-offset-12">
+            <h2 class="text-center">Thanks {{ firstname }}, you have add a threadhold for patient {{ patient.first_name }}.</h2>
+            <a href="{%url 'getPatientDashboard' patient.username%}" style="padding-top: 30px;">Click here to see patient {{ patient.first_name }} history measurement again.</a>
+            <br>
+            <br>
+        </div>
+    </div> 
+</center>
+{% endblock %} 
