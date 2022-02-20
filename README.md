@@ -17,7 +17,14 @@
 
 #### 2.	Which part of the solution consumed the most amount of time?
 
+- uild account systems for patient and clinician cost me the most amount of time. 
+
 #### 3.	What suggestions do you have for stakeholders in this context that they may not have thought of?
+- a. Building Machine Learning Mode Predict based on the history of patient measurement and recommend patient what they should pay attention to?
+- b. User a better visualization table to show patient’s information to the clinician 
+- c. Integrate location-based service to the APP? 
+- d. Online inquiry service for patient
+- e. Doing enough user and user journal research, considering the UI UX element of making the APP
 
 ### Start process
 
