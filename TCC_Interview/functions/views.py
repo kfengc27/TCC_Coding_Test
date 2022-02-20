@@ -67,7 +67,7 @@ def sendEmail(subject,message,email_to):
 
 def getAlert(measureObj):
     try:
-        alertObjs = Alert.objects.get(alterBy = measureObj)  
+        alertObjs = Alert.objects.filter(alterBy = measureObj)  #Bug is here due to a wrong function. 
         if(len(alertObjs)>0):
             return True 
     except:
