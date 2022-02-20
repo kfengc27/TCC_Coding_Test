@@ -14,6 +14,7 @@ class Measurement(models.Model):
     type = models.CharField(max_length=128, default='')
     score = models.FloatField()
     c_time = models.DateTimeField(auto_now_add=True)
+    # alerted = models.BooleanField(default=False)
     TestBy = models.ForeignKey(
         aModel.Patient,
         on_delete=models.CASCADE,
@@ -45,4 +46,6 @@ class Threshold(models.Model):
         aModel.Patient,
         on_delete=models.CASCADE,
     )
-    ordering = ['-c_time']
+    class Meta:
+        ordering = ['-c_time']
+

@@ -125,19 +125,27 @@ def getPatientDashboard(request, username):
             for measure in measurementObjSets:
                 heart_rate = measure.score 
                 measurement_time = measure.c_time
-                measureObj = {'heart_rate':heart_rate,'measurement_time':measurement_time}
+                # AlertOrNot = 'N/A'
+                try:
+                    AlertOrNot = fViews.getAlert(measure)
+                except:
+                    AlertOrNot = 'N/A'
+                # alerted =
+                measureObj = {'heart_rate':heart_rate,'measurement_time':measurement_time,'alerted':AlertOrNot}
                 measureObjs.append(measureObj)
         except:
             heart_rate = 'N/A' 
             measurement_time = 'N/A'
-            measureObj = {'heart_rate':heart_rate,'measurement_time':measurement_time}
+            AlertOrNot = 'N/A'
+            measureObj = {'heart_rate':heart_rate,'measurement_time':measurement_time,'alerted':AlertOrNot}
             measureObjs.append(measureObj)   
     except:
         patient = ''
         measureObjs = []
         heart_rate = 'N/A' 
         measurement_time = 'N/A'
-        measureObj = {'heart_rate':heart_rate,'measurement_time':measurement_time}
+        AlertOrNot = 'N/A'
+        measureObj = {'heart_rate':heart_rate,'measurement_time':measurement_time, 'alerted':AlertOrNot}
         measureObjs.append(measureObj)
     thresholdObjs = fViews.getThresholds(patient) # get all thresholds belong to the patient. 
     return render(request, 'clinician/patientdashboard.html',{'firstname': request.session['first_name'], 'patient':patient,'measureObjs':measureObjs, 'thresholdObjs':thresholdObjs})
@@ -179,11 +187,16 @@ def patientAddHeartRate(request):
     if request.method == 'POST':
         heartrate = request.POST.get('heartrate')
         record_time = request.POST.get('measure-time') 
-        patient = Patient.objects.get(email = request.session['email'])
+        print("The email is ", request.session['email'])
+        print("A bug here?") #no
+        patient = Patient.objects.get(email = request.session['email']) #bug?
+        print("The patient name is", patient.first_name)
         type = 'Heart Rate'
-        fViews.setMeasurementScore(type, heartrate, record_time,patient)
-        
-        fViews.detectAbnormal(type,heartrate,record_time,Patient)
+        measurementObj = fViews.setMeasurementScore(type, heartrate, record_time,patient)
+        thresholdObjs = fViews.getThresholds(patient) # get all thresholds belong to the patient. 
+        print("Number of thresholdObjs", len(thresholdObjs))
+        fViews.detectAbnormal(type,heartrate,record_time,patient,thresholdObjs,measurementObj)
+
         return render(request, 'patient/patientCompleteMeasurement.html', {'firstname': request.session['first_name']})
     return render(request, 'patient/patientAddHeartRate.html', {'firstname': request.session['first_name']})
 
