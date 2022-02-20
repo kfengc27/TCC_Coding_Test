@@ -54,8 +54,21 @@
         </div>
         <div class="col py-3">
             <h3>Hi {{ firstname }}</h3>
-            <p class="lead">These are all of your patients.<br><i class="fa-solid fa-pencil"></i>Click the name of each patient to view the patient dashboard </p>
+            <p class="lead">This is all of the measurement of patient: <strong>{{ patient.first_name }}  {{ patient.last_name }}.</strong><br></p>
           
+            <br>
+            {% if thresholdObjs %}
+                {% for threshold in thresholdObjs %}
+                {% if forloop.last %}
+                <p class="lead">Latest Threshold for<strong> {{ threshold.type }} </strong> Max Threadhold is <strong> {{ threshold.ThresholdScoreMax }} </strong> Minimal Threadhold is <strong> {{ threshold.ThresholdScoreMin }}</strong> created at {{ threshold.c_time }}<br></p>
+                {%endif%}
+                {% endfor %}
+            {% else %}
+                No Threshold yet.
+            {% endif %}
+            <a href="{%url 'setThreadholdPage'%}">Set Threadhold</a>
+            <br>
+            <h4 style="padding-top: 30px;">History of patient measurements </h4>
             <table class="table">
                 <thead>
                   <tr>
@@ -69,15 +82,15 @@
                   </tr>
                 </thead>
                 <tbody>
-                    {% for patient in patientObjs %}
+                    {% for measure in measureObjs %}
                   <tr>
                     <th scope="row">{{ forloop.counter }}</th>
-                    <td><a href="{%url 'getPatientDashboard' patient.username%}" target="_blank">{{ patient.first_name }}</a></td>
+                    <td>{{ patient.first_name }}</td>
                     <td>{{ patient.last_name}}</td>
                     <td>{{ patient.email }}</td>
                     <td>{{ patient.date_of_birth}}</td>
-                    <td>{{ patient.heart_rate}}</td>
-                    <td>{{ patient.measurement_time}}</td>
+                    <td>{{ measure.heart_rate}}</td>
+                    <td>{{ measure.measurement_time}}</td>
                   </tr>
                   {% endfor %}
                 </tbody>

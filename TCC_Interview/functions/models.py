@@ -23,7 +23,7 @@ class Measurement(models.Model):
        ordering = ['-c_time']
 
 class Alert(models.Model):
-    Thresholds = models.IntegerField()
+    Thresholds = models.FloatField()
     c_time = models.DateTimeField(auto_now_add=True)
     belongPatient = models.ForeignKey(
         aModel.Patient,
@@ -37,9 +37,12 @@ class Alert(models.Model):
        ordering = ['-c_time']
 
 class Threshold(models.Model):
-    Threshold = models.IntegerField()
+    ThresholdScoreMax = models.FloatField(default=140.00)
+    ThresholdScoreMin = models.FloatField(default=70.00)
+    type = models.CharField(max_length=128, default='')
     c_time = models.DateTimeField(auto_now_add=True)
     belongPatient = models.ForeignKey(
         aModel.Patient,
         on_delete=models.CASCADE,
     )
+    ordering = ['-c_time']

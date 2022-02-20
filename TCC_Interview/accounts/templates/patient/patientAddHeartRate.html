@@ -2,10 +2,11 @@
 
 <center>
   <div class="container">
-    <div class="col-md-4 col-md-offset-4">
+    <div class="col-md-8 col-md-offset-8">
       <h2 class="text-center">
         Hi {{ firstname }}, What's your latest heart rate.
       </h2>
+      <h4>* Please wait the page to redirect if needs to send email to reminder Clinician.</h4>
       <br />
       <form class='form-login' action="/clinician/patient/addHeartRate/" method="post">
         {% csrf_token %}

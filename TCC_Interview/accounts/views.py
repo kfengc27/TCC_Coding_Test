@@ -60,7 +60,6 @@ def login(request):
         if email and password:
             try:
                 user = Clinician.objects.get(email =email)
-
                 if user.password == password:
                     message = "Login Successfully"
                     print(message)
@@ -94,6 +93,7 @@ def getMyPatients(request):
     myPatients = Patient.objects.filter(MyClinician = user)
     PatientObjs = []
     for patient in myPatients:
+        username = patient.username
         first_name = patient.first_name 
         last_name = patient.last_name 
         email = patient.email
@@ -106,10 +106,41 @@ def getMyPatients(request):
         except:
             heart_rate = 'N/A' 
             measurement_time = 'N/A'
-        patientObj = {'first_name':first_name, 'last_name':last_name,'email':email,'date_of_birth':data_of_birth,'heart_rate':heart_rate,'measurement_time':measurement_time}
+        patientObj = {'username':username, 'first_name':first_name, 'last_name':last_name,'email':email,'date_of_birth':data_of_birth,'heart_rate':heart_rate,'measurement_time':measurement_time}
         PatientObjs.append(patientObj)
     return render(request, 'clinician/showmypatient.html', {'firstname': request.session['first_name'], 'patientObjs':PatientObjs})
 
+def getPatientDashboard(request, username):
+    try:
+        patient = Patient.objects.get(username=username)
+        username = patient.username
+        request.session['patient_username'] = username 
+        first_name = patient.first_name 
+        last_name = patient.last_name 
+        email = patient.email
+        data_of_birth = patient.date_of_birth 
+        measureObjs = []
+        try:
+            measurementObjSets = Measurement.objects.filter(TestBy=patient)
+            for measure in measurementObjSets:
+                heart_rate = measure.score 
+                measurement_time = measure.c_time
+                measureObj = {'heart_rate':heart_rate,'measurement_time':measurement_time}
+                measureObjs.append(measureObj)
+        except:
+            heart_rate = 'N/A' 
+            measurement_time = 'N/A'
+            measureObj = {'heart_rate':heart_rate,'measurement_time':measurement_time}
+            measureObjs.append(measureObj)   
+    except:
+        patient = ''
+        measureObjs = []
+        heart_rate = 'N/A' 
+        measurement_time = 'N/A'
+        measureObj = {'heart_rate':heart_rate,'measurement_time':measurement_time}
+        measureObjs.append(measureObj)
+    thresholdObjs = fViews.getThresholds(patient) # get all thresholds belong to the patient. 
+    return render(request, 'clinician/patientdashboard.html',{'firstname': request.session['first_name'], 'patient':patient,'measureObjs':measureObjs, 'thresholdObjs':thresholdObjs})
 
 def loginAsPatient(request):
     if request.session.get('is_login',None):
@@ -150,9 +181,9 @@ def patientAddHeartRate(request):
         record_time = request.POST.get('measure-time') 
         patient = Patient.objects.get(email = request.session['email'])
         type = 'Heart Rate'
-        print(heartrate)
-        fViews.sendEmail()
-        fViews.setMeasurementScore( type, heartrate, record_time,patient)
+        fViews.setMeasurementScore(type, heartrate, record_time,patient)
+        
+        fViews.detectAbnormal(type,heartrate,record_time,Patient)
         return render(request, 'patient/patientCompleteMeasurement.html', {'firstname': request.session['first_name']})
     return render(request, 'patient/patientAddHeartRate.html', {'firstname': request.session['first_name']})
 
@@ -167,6 +198,19 @@ def patientShowAllMyHistory(request):
 def patientLogout(request):
     request.session.flush()
     return render(request, 'patient/patientlogin.html')
+
+def setThreadholdPage(request):
+    patient = Patient.objects.get(username=request.session['patient_username'])
+    if request.method == 'POST':
+        maxThreadhold = request.POST.get('maxthreadhold')
+        minThreadhold = request.POST.get('minthreadhold')
+        measurementType = request.POST.get('measurementType')
+        fViews.setThresholds(maxThreadhold,minThreadhold,measurementType,patient)
+        return render(request, 'clinician/setThreadholdCompletePage.html', {'firstname':request.session['first_name'],'patient':patient})
+    return render(request, 'clinician/setThreadhold.html', {'firstname': request.session['first_name'], 'patient':patient})
+
+def setThreadholdCompletePage(request):
+    return render(request, 'clinician/setThreadholdCompletePage.html')
 
 
 
