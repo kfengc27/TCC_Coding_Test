@@ -21,7 +21,7 @@ class SignupForm(forms.Form):
     password2 = forms.CharField(label="Confirm password", max_length=256, widget=forms.PasswordInput(attrs={'class': 'form-control'}))
     email = forms.EmailField(label="Email address", widget=forms.EmailInput(attrs={'class': 'form-control'}))
     sex = forms.ChoiceField(label='Sex', choices=gender)
-    date_of_birth = forms.DateField(label="Date Of Birth", widget=DatePickerInput())
+    date_of_birth = forms.DateField(label="Date Of Birth", widget=forms.widgets.DateInput(attrs={'type': 'date'}))
     captcha = CaptchaField(label='Vertify Code')
     # class Meta: 
     #     model = patient

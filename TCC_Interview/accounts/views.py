@@ -22,8 +22,8 @@ def registerPatient(request):
         return render(request, 'clinician/login.html')
     if request.method == 'POST':
         register_form = SignupForm(request.POST) 
-        message = "Please enter the patient's information"
     # register patient's information into db.
+        message = "Please enter the patient's information"
         if register_form.is_valid():
             username = register_form.cleaned_data['username']
             first_name = register_form.cleaned_data['first_name']
@@ -41,16 +41,23 @@ def registerPatient(request):
                 if same_name_user:
                     message = "The patient with same username already exist, please enter others"
                     return render(request, "clinician/register.html", locals())
-                same_email_user = Patient.objects.filter(email = email)
+                same_name_email = Patient.objects.filter(email = email)
+                if same_name_email:
+                    message = "The patient with same email already exist, please enter others"
+                    return render(request, "clinician/register.html", locals())
                 myClinicianObj = Clinician.objects.get(email = request.session['email'])
                 Patient.objects.create(username =username, first_name = first_name, last_name = last_name,password = password1, sex = sex,email = email ,date_of_birth = date_of_birth, MyClinician = myClinicianObj  )
                 # print(myClinicianObj.username)
                 # new_patient.MyClinician = myClinicianObj  
-                return render(request, "clinician/login.html", locals())
+                message = "Congrates! You have register a new patient. If you want to register more, please fill more."
+                register_form = SignupForm() 
+                return render(request, "clinician/register.html", locals())
+            message = "Sorry, you enter a wrong vertify code. Please try one more time."
     register_form = SignupForm() 
     return render(request, "clinician/register.html", locals())
 
 def login(request):
+    request.session.flush()
     if request.session.get('is_login',None):
         return render(request, 'clinician/authorized.html', { 'firstname': request.session['first_name'], 'lastname': request.session['last_name'] })
     print(request.method)
@@ -78,13 +85,15 @@ def login(request):
             except:
                 message = "email not exist"
                 print(message)
-    return render(request, 'clinician/login.html')
+    return render(request, 'clinician/login.html',locals())
 
 # @login_required(login_url='/clinician/login')
 def authorized(request):
     return render(request, 'clinician/authorized.html', {})
 
 def getMyPatients(request):
+    if request.session.get('is_login',None) != True:
+        return render(request, 'clinician/login.html')
     # TODO Get patient table 
     # context= {'title':'My Patients Table','list':1}
     myemail = request.session['email']
@@ -151,8 +160,15 @@ def getPatientDashboard(request, username):
     return render(request, 'clinician/patientdashboard.html',{'firstname': request.session['first_name'], 'patient':patient,'measureObjs':measureObjs, 'thresholdObjs':thresholdObjs})
 
 def loginAsPatient(request):
-    if request.session.get('is_login',None):
-        return render(request, 'patient/patienthome.html', { 'firstname': request.session['first_name'], 'lastname': request.session['last_name'] })
+    request.session.flush()
+    # if request.session.get('is_login',None) != True:
+    #     try:
+    #         Patient.objects.get(email = request.session['email'])
+    #     except:
+    #         # message = "Please login through patient's account."
+    #         return render(request, 'patient/patientlogin.html', locals())
+    # if request.session.get('is_login',None):
+        # return render(request, 'patient/patienthome.html', { 'firstname': request.session['first_name'], 'lastname': request.session['last_name'] })
     if(request.method == 'POST'):
         email = request.POST.get('email')
         password = request.POST.get('password')
@@ -173,10 +189,11 @@ def loginAsPatient(request):
                     message = 'password is not correct.'
             except:
                 message = "email not exist"
-                print(message)
-    return render(request, 'patient/patientlogin.html')
+    return render(request, 'patient/patientlogin.html',locals())
 
 def logout(request):
+    if request.session.get('is_login',None) != True:
+        return render(request, 'clinician/login.html')
     request.session.flush()
     return render(request, 'clinician/login.html')
 
@@ -184,6 +201,12 @@ def patientHome(request):
     return render(request, 'patient/patienthome.html', {})
 
 def patientAddHeartRate(request):
+    if request.session.get('is_login',None) != True:
+        try:
+            Patient.objects.get(email = request.session['email'])
+        except:
+            message = "Please login through patient's account."
+            return render(request, 'patient/patientlogin.html', locals())
     if request.method == 'POST':
         heartrate = request.POST.get('heartrate')
         record_time = request.POST.get('measure-time') 
@@ -213,6 +236,8 @@ def patientLogout(request):
     return render(request, 'patient/patientlogin.html')
 
 def setThreadholdPage(request):
+    if request.session.get('is_login',None) != True:
+        return render(request, 'clinician/login.html')
     patient = Patient.objects.get(username=request.session['patient_username'])
     if request.method == 'POST':
         maxThreadhold = request.POST.get('maxthreadhold')
