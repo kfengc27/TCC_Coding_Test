@@ -147,3 +147,5 @@ EMAIL_HOST = 'smtp-mail.outlook.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER  = 'chengbin.feng@outlook.com'
 EMAIL_HOST_PASSWORD = '581039fCb'
+
+SILENCED_SYSTEM_CHECKS = ['captcha.recaptcha_test_key_error']
