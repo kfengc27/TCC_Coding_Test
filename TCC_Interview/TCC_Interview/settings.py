@@ -93,7 +93,22 @@ WSGI_APPLICATION = 'TCC_Interview.wsgi.application'
 #     }
 # }
 
-DATABASES['default'] = dj_database_url.config()
+# DATABASES['default'] = dj_database_url.config()
+DATABASES = {
+
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'jc8efghczx95z7w0',
+        'USER': 'a5ni5regdn1zoj8o',
+        'PASSWORD': 'ip256z19djwsygdz',
+        'HOST': 'eanl4i1omny740jw.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
+        'PORT': '3306',
+        'OPTIONS': {
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+            'ssl': True
+        }
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
