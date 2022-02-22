@@ -10,33 +10,19 @@ from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 
-
-# def login(request):
-#     print(request.method)
-#     if(request.method == 'POST'):
-#         email = request.POST.get('email')
-#         password = request.POST.get('password')
-#         if email and password:
-#             try:
-#                 print("Search")
-#                 print(email)
-#                 print(password)
-#                 print(models.Clinician.objects.get(email=email))
-#                 # user = models.Clinician.objects.fileter(email = email)
-#                 print(user)
-#                 if user.password == password:
-#                     print('correct')
-#             except:
-#                 message = "email not exist"
-#     return render(request, 'home/login.html')
-
-
-# @login_required(login_url='/login')
-# def authorized(request):
-#     return render(request, 'home/authorized.html', {})
-
 def home(request):
     return render(request, 'home/welcome.html', {'today':datetime.today()})
+
+def handler404(request, *args, **argv):
+    response = render('404.html')
+    response.status_code = 404
+    return response
+
+
+def handler500(request, *args, **argv):
+    response = render('500.html')
+    response.status_code = 500
+    return response
 
 
 
